@@ -1,18 +1,18 @@
 package raise.student.management2;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class StudentDetail {
 
-  private String name;
-  private int age;
-
+  private Students students;
+  private List<StudentCourse> studentCourse;
 
 }

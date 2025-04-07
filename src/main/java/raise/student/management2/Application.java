@@ -48,7 +48,7 @@ public class Application {
   @DeleteMapping("/delete")
   public void delete(String name) {
     re.delete(name);
-  }
+  }//a
 
   @GetMapping("/c")
   public List<Student> c() {

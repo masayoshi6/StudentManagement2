@@ -1,10 +1,10 @@
 package raise.student.management2;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -30,10 +30,13 @@ public interface StudentRepository {
   @Select("SELECT * FROM students WHERE name=#{name}")
   Students g(String name);
 
-  @Insert("INSERT students values(#{id}, #{name}, #{kanaName}, #{nickname}, "
-      + "#{email}, #{area}, #{age}, #{sex})")
-  void h(String id, String name, String kanaName, String nickname, String email,
-      String area, int age, String sex);
+  @Insert(
+      "INSERT INTO students(name, kana_name, nickname, email, area, age, sex, remark, is_deleted)"
+          + " values(#{name}, #{kanaName}, #{nickname}, "
+          + "#{email}, #{area}, #{age}, #{sex}, #{remark}, false)")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+    //@OptionsアノテーションはINSERT（挿入）するときにつけるべきもの
+  void h(Students students);
 
   @Update("UPDATE students SET age=#{age}, nickname=#{nickname} WHERE name=#{name}")
   void i(String name, int age, String nickname);
@@ -42,24 +45,32 @@ public interface StudentRepository {
   void j(String id);
 
   @Select("SELECT * FROM students")
-  List<Students> k();
+  List<Students> search();
 
+  @Insert("INSERT students_courses(student_id, course_name, course_start_at, course_end_at) "
+      + "values(#{studentId}, #{courseName}, #{courseStartAt}, #{courseEndAt})")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+    //@OptionsアノテーションはINSERT（挿入）するときにつけるべきもの
+  void registerStudentCourse(StudentCourse studentCourse);
 
-  @Select("SELECT * FROM students_courses WHERE id=#{id}")
-  StudentCourse l(String id);
-
-  @Insert("INSERT students_courses values(#{id}, #{studentId}, #{courseName}, "
-      + "#{courseStartAt}, #{courseEndAt})")
-  void m(String id, String studentId, String courseName,
-      LocalDateTime courseStartAt, LocalDateTime courseEndAt);
-
-  @Update("UPDATE students_courses SET courseName=#{courseName} WHERE id=#{id}")
-  void n(String id, String courseName);
-
-  @Delete("DELETE FROM students_courses WHERE id = #{id}")
-  void o(String id);
 
   @Select("SELECT * FROM students_courses")
   List<StudentCourse> p();
 
+  @Update("UPDATE students SET name=#{name}, kana_name=#{kanaName}, nickname=#{nickname}, "
+      + "email=#{email}, area=#{area}, age=#{age}, sex=#{sex}, remark=#{remark}, "
+      + "is_deleted=#{isDeleted} WHERE id=#{id}")
+  void updateStudent(Students students);
+
+  @Update("UPDATE students_courses SET course_name=#{courseName} WHERE id=#{id}")
+  void updateStudentCourse(StudentCourse studentCourse);
+
+  @Select("SELECT * FROM students WHERE id=#{id}")
+  Students searchStudent(String id);
+
+  @Select("SELECT * FROM students_courses")
+  List<StudentCourse> searchStudentCourseList();
+
+  @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
+  List<StudentCourse> searchStudentCourse(String studentId);
 }

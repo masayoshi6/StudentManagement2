@@ -48,7 +48,7 @@ public class Application {
   @DeleteMapping("/delete")
   public void delete(String name) {
     re.delete(name);
-  }//a
+  }
 
   @GetMapping("/c")
   public List<Student> c() {
@@ -67,11 +67,11 @@ public class Application {
         + d.getEmail();
   }
 
-  @PostMapping("/e")
+ /* @PostMapping("/e")
   public void e(String id, String name, String kanaName, String nickname,
-      String email, String area, int age, String sex) {
-    re.h(id, name, kanaName, nickname, email, area, age, sex);
-  }
+      String email, String area, int age, String sex, String remark) {
+    re.h(id, name, kanaName, nickname, email, area, age, sex, remark);
+  }*/
 
   @PatchMapping("/f")
   public void f(String name, int age, String nickname) {

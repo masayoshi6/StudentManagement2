@@ -77,7 +77,7 @@ public class Application {
   public void f(String name, int age, String nickname) {
     re.i(name, age, nickname);
   }
-  //tranzactional
+  //tranzactionala
 
 
   @DeleteMapping("/g")

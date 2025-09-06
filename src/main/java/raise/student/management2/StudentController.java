@@ -37,7 +37,7 @@ public class StudentController {
 
   /*@GetMapping("/i")
   public List<StudentDetail> i() {
-    return service.aa();あいうえお
+    return service.aa();
   }*/
 
   @GetMapping("/stude")
